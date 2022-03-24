@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <style>
+        .hideElement {
+            opacity: 0%;
+        }
+
+        .fp-image-gray {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        .fp-image-gray-only {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        .fp-image-gray:hover {
+            -webkit-filter: grayscale(0%);
+            filter: grayscale(0%);
+        }
+    </style>
+    <title>CCS Web Prototype</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <a class="navbar-brand" href="#"><b>BiTnet: AI for Biliary Tract Imange Analysis via Ultrasound
+                    Image</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://cascap.kku.ac.th/">CARI CASCAP</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="howto.html">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row mt-5">
+            <div class="col-3">
+                <div class="nav flex-column nav-pills text-center align-middle" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <button class="btn nav-link border active" id="v-pills-home-tab" data-toggle="pill"
+                        href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"
+                        style="height: 120px;">Top-1 suggestion AI confidence</button>
+                    <button class="btn nav-link border" id="v-pills-profile-tab" data-toggle="pill"
+                        href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+                        style="height: 120px;">Top-3 AI attention area</button>
+                    <button class="btn nav-link border" id="v-pills-messages-tab" data-toggle="pill"
+                        href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"
+                        style="height: 120px;">AI attention area</button>
+                    <button class="btn nav-link border" id="v-pills-settings-tab" data-toggle="pill"
+                        href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"
+                        style="height: 120px;">Viewing angle prediction</button>
+                </div>
+            </div>
+            <div class="col-9 border p-4">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+                        <div class="row">
+                            <div class="col-6">
+                                <table class="table table-bordered table-striped">
+                                    <thead style="background-color: rgb(239, 251, 255);;">
+                                        <tr>
+                                            <th scope="col" class="text-center">Stage</th>
+                                            <th scope="col" class="text-center" style="color: rgb(230, 23, 185);">
+                                                Confidence</th>
+                                            <th scope="col" class="text-center text-danger">AI</th>
+                                            <th scope="col" class="text-center text-success">You</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row" class="text-center">N2</th>
+                                            <td class="text-center font-weight-bold" style="color: rgb(230, 23, 185);">
+                                                45.3%</td>
+                                            <td class="text-center">
+                                                <input type="radio" name="aiRadios" value="option1" checked>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="radio" name="youRadios" value="option1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="text-center">N1</th>
+                                            <td class="text-center font-weight-bold" style="color: rgb(230, 23, 185);">
+                                                44.2%</td>
+                                            <td class="text-center">
+                                                <input type="radio" name="aiRadios" value="option2" disabled>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="radio" name="youRadios" value="option2" checked>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="text-center">Wake</th>
+                                            <td class="text-center font-weight-bold" style="color: rgb(230, 23, 185);">
+                                                10.0%</td>
+                                            <td class="text-center">
+                                                <input type="radio" name="aiRadios" value="option3" disabled>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="radio" name="youRadios" value="option3">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="text-center">REM</th>
+                                            <td class="text-center font-weight-bold" style="color: rgb(230, 23, 185);">
+                                                0.4%</td>
+                                            <td class="text-center">
+                                                <input type="radio" name="aiRadios" value="option4" disabled>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="radio" name="youRadios" value="option4">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="text-center">N3</th>
+                                            <td class="text-center font-weight-bold" style="color: rgb(230, 23, 185);">
+                                                0.1%</td>
+                                            <td class="text-center">
+                                                <input type="radio" name="aiRadios" value="option5" disabled>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="radio" name="youRadios" value="option5">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <div class="row mb-3 justify-content-center">
+                                    <h6>Ambiguity Explanation</h6>
+                                </div>
+                                <div class="row p-1" id="explanation1" style="margin-top: -10px;">
+                                    <div class="col">
+                                        <div class="row" style="font-size: 14px;">
+                                            <div class="card">
+                                                <div class="card-header font-weight-bold"
+                                                    style="background-color: rgb(239, 251, 255);">
+                                                    This case may be ambiguous because multiple conflicting rules may
+                                                    apply:
+                                                </div>
+                                                <div class="card-body font-weight-bold"
+                                                    style="color: rgb(255, 187, 0);">
+                                                    <span
+                                                        id="textRadio">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-2">
+                                            <button class="btn btn-primary">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <img src="static/1_AB01 P1 C100.JPG" class="img-fluid mb-2">
+                                <span>Original Image (<span class="text-danger">FP-A</span>)</span>
+                            </div>
+                            <div class="col mt-5">
+                                <div class="row p-3 bg-light text-danger mb-3 font-weight-bold border mt-5">AB02:
+                                    Moderate
+                                    Fatty
+                                    Liver with
+                                    probability = 53.81%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                        aria-labelledby="v-pills-profile-tab">
+                        <div class="row">
+                            <div class="col text-center mt-5">
+                                <img src="C:/Users/ASUS/Desktop/CCA-WebPrototype-week7/static/1_AB01 P1 C100.JPG" class="img-fluid mb-2">
+                                <span>Original Image (<span class="text-danger">FP-A</span>)</span>
+                            </div>
+                            <div class="col mt-5">
+                                <div class="row p-3 bg-light text-danger mb-3 font-weight-bold border">
+                                    53.81% : AB02: Moderate Fatty Liver<br>
+                                    20.60% : AB01 : Mild Fatty Liver<br>
+                                    7.25% : AB082 : Bile Duct Dilatation - IHD Stone
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                        aria-labelledby="v-pills-messages-tab">
+                        <div class="row">
+                            <div class="col text-center mt-5">
+                                <img src="1_AB01 P1 C100.JPG" class="img-fluid mb-2">
+                                <span>Original Image (<span class="text-danger">FP-A</span>)</span>
+                            </div>
+                            <div class="col text-center mt-5">
+                                <img src="image-prediction.png" class="img-fluid mb-2">
+                                <span>Model Attention Image</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                        aria-labelledby="v-pills-settings-tab">
+                        <div class="row">
+                            <div class="col text-center mt-5">
+                                <img src="1_AB01 P1 C100.JPG" class="img-fluid mb-2">
+                                <span>Original Image (<span class="text-danger">FP-A</span>)</span>
+                            </div>
+                            <div class="col text-center mt-5">
+                                <div>Your Decision :</div>
+                                <div class="row justify-content-center mt-3">
+                                    <div class="col-4 p-2">
+                                        <a href="#">
+                                            <img src="http://kkucascap01.southeastasia.cloudapp.azure.com:5000/static/FPA.png"
+                                                class="img-fluid fp-image-gray" id="yourDecision1" style="width: 100px;"
+                                                onclick="fpImageFunction(1)">
+                                        </a>
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <a href="#">
+                                            <img src="http://kkucascap01.southeastasia.cloudapp.azure.com:5000/static/FPB.png"
+                                                class="img-fluid" id="yourDecision2" style="width: 100px;"
+                                                onclick="fpImageFunction(2)">
+                                        </a>
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <a href="#">
+                                            <img src="http://kkucascap01.southeastasia.cloudapp.azure.com:5000/static/FPC.png"
+                                                class="img-fluid fp-image-gray" id="yourDecision3" style="width: 100px;"
+                                                onclick="fpImageFunction(3)">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-4 p-2 mr-1">
+                                        <a href="#">
+                                            <img src="http://kkucascap01.southeastasia.cloudapp.azure.com:5000/static/FPD.png"
+                                                class="img-fluid fp-image-gray" id="yourDecision4" style="width: 100px;"
+                                                onclick="fpImageFunction(4)">
+                                        </a>
+                                    </div>
+                                    <div class="col-4 p-2 ml-1" style="border: 1.5px solid red; background: #ffe1e1;">
+                                        <a href="#">
+                                            <img src="http://kkucascap01.southeastasia.cloudapp.azure.com:5000/static/FPE.png"
+                                                class="img-fluid fp-image-gray" id="yourDecision5" style="width: 100px;"
+                                                onclick="fpImageFunction(5)">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-4 p-2 mr-1"></div>
+                                    <div class="col-4 p-2 ml-1"><span class="text-danger">AI Suggestion</span> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="footer">
+            <div class="row">
+                <div class="col">
+                    <small> @CASCAP 2021. Khon Kaen University </small>
+                </div>
+                <div class="col text-right">
+                    <small> Created by peckie. </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function btnFunction() {
+            var btn = document.getElementById('explanation1');
+            var isActive = btn.classList.contains('hideElement');
+            if (isActive) {
+                btn.classList.add('hideElement');
+            } else {
+                btn.classList.remove('hideElement');
+            }
+        }
+
+        function fpImageFunction(id) {
+            var fpImage = document.getElementById('yourDecision' + id);
+            // clear class other
+            switch (id) {
+                case 1:
+                    document.getElementById('yourDecision1').classList.remove('fp-image-gray');
+                    document.getElementById('yourDecision2').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision3').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision4').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision5').classList.add('fp-image-gray');
+                    break;
+                case 2:
+
+                    document.getElementById('yourDecision1').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision2').classList.remove('fp-image-gray');
+                    document.getElementById('yourDecision3').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision4').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision5').classList.add('fp-image-gray');
+                    break;
+                case 3:
+
+                    document.getElementById('yourDecision1').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision2').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision3').classList.remove('fp-image-gray');
+                    document.getElementById('yourDecision4').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision5').classList.add('fp-image-gray');
+                    break;
+                case 4:
+
+                    document.getElementById('yourDecision1').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision2').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision3').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision4').classList.remove('fp-image-gray');
+                    document.getElementById('yourDecision5').classList.add('fp-image-gray');
+                    break;
+                case 5:
+                    document.getElementById('yourDecision1').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision2').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision3').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision4').classList.add('fp-image-gray');
+                    document.getElementById('yourDecision5').classList.remove('fp-image-gray');
+                    break;
+            }
+        }
+
+        window.onchange = () => {
+            var aiRadio = document.getElementsByName('aiRadios');
+            var youRadio = document.getElementsByName('youRadios');
+            var aiChecked = null;
+            var youChecked = null;
+            for (var i = 0, length = aiRadio.length; i < length; i++) {
+                if (aiRadio[i].checked) { aiChecked = aiRadio[i].value; }
+            }
+            for (var i = 0, length = youRadio.length; i < length; i++) {
+                if (youRadio[i].checked) { youChecked = youRadio[i].value; }
+            }
+            if (aiChecked == youChecked) {
+                document.getElementById('textRadio').innerHTML = "none";
+            } else if ((youChecked != aiChecked) && youChecked == 'option1') {
+                document.getElementById('textRadio').innerHTML = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+            } else if ((youChecked != aiChecked) && youChecked == 'option2') {
+                document.getElementById('textRadio').innerHTML = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+            } else if ((youChecked != aiChecked) && youChecked == 'option3') {
+                document.getElementById('textRadio').innerHTML = "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC";
+            } else if ((youChecked != aiChecked) && youChecked == 'option4') {
+                document.getElementById('textRadio').innerHTML = "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD";
+            } else if ((youChecked != aiChecked) && youChecked == 'option5') {
+                document.getElementById('textRadio').innerHTML = "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+        integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
