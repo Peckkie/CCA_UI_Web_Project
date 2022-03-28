@@ -18,3 +18,11 @@
             ```
             $conda install flask 
             ```
+  * requests
+            ```
+            $conda install requests 
+            ```
+  * jsons
+            ```
+            $pip install jsons
+            ```
