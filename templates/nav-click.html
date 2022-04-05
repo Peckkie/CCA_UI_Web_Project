@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <!-- start css -->
     <style>
         .hideElement {
             opacity: 0%;
@@ -26,10 +27,18 @@
             filter: grayscale(0%);
         }
     </style>
+    <!-- end css -->
     <title>CCS Web Prototype</title>
 </head>
 
 <body>
+    <!-- Cookies testing -->
+    <h2 style="color: red;">element01 = {{request.cookies.get('element_1')}}</h2>
+    <h2 style="color: red;">element02 = {{request.cookies.get('element_2')}}</h2>
+    <h2 style="color: red;">element03 = {{request.cookies.get('element_3')}}</h2>
+    <h2 style="color: red;">element04 = {{request.cookies.get('element_4')}}</h2>
+    <h2 style="color: red;">element05 = {{request.cookies.get('element_5')}}</h2>
+
     <div class="container">
         <!-- Navigation Bar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
@@ -56,15 +65,15 @@
         <div class="row mt-5">
             <div class="col-3">
                 <div class="nav flex-column nav-pills text-center align-middle">
-                    <button class="btn active nav-link border" onclick="btnFunction('first')" id="first"
+                    <button class="btn nav-link border" onclick="btnFunction('1')" id="element_1"
                         style="height: 120px;">Top-1 suggestion AI confidence</button>
-                    <button class="btn active nav-link border" onclick="btnFunction('second')" id="second"
+                    <button class="btn nav-link border" onclick="btnFunction('2')" id="element_2"
                         style="height: 120px;">Ambiguity Explanation</button>
-                    <button class="btn active nav-link border" onclick="btnFunction('third')" id="third"
+                    <button class="btn nav-link border" onclick="btnFunction('3')" id="element_3"
                         style="height: 120px;">Top-3 AI attention area</button>
-                    <button class="btn active nav-link border" onclick="btnFunction('fourth')" id="fourth"
+                    <button class="btn nav-link border" onclick="btnFunction('4')" id="element_4"
                         style="height: 120px;">AI attention area</button>
-                    <button class="btn active nav-link border" onclick="btnFunction('fifth')" id="fifth"
+                    <button class="btn nav-link border" onclick="btnFunction('5')" id="element_5"
                         style="height: 120px;">Viewing angle prediction</button>
                 </div>
             </div>
@@ -141,10 +150,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-6" id="content-second">
+                        <div class="col-6" id="content-2">
                             <div class="row mb-3 justify-content-center">
-                                <!-- <button class="btn btn-outline-danger" onclick="btnFunction()">Ambiguity
-                                    Explanation</button> -->
                                 <h6>Ambiguity Explanation</h6>
                             </div>
                             <div class="row" id="explanation1">
@@ -181,7 +188,7 @@
                                     <span>Original Image (<span class="text-danger">FP-A</span>)</span>
                                 </div>
                             </div>
-                            <div class="row" id="content-first">
+                            <div class="row" id="content-1">
                                 <div class="col">
                                     <div class="row bg-light text-danger font-weight-bold border mt-2">AB02:
                                         Moderate
@@ -192,13 +199,13 @@
                             </div>
                         </div>
                         <div class="col mr-1">
-                            <div class="row" id="content-fourth">
+                            <div class="row" id="content-4">
                                 <div class="col text-center">
                                     <img src="../static/image-prediction.png" class="img-fluid mb-2">
                                     <span>Model Attention Image</span>
                                 </div>
                             </div>
-                            <div class="row" id="content-third">
+                            <div class="row" id="content-3">
                                 <div class="col">
                                     <div class="row p-3 bg-light text-danger mt-2 mb-3 font-weight-bold border"
                                         style="font-size: 12px;">
@@ -208,7 +215,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col text-center" id="content-fifth">
+                        <div class="col text-center" id="content-5">
                             <div class="row">
                                 <div class="col text-center mt-5">
                                     <h6>Your Decision :</h6>
@@ -276,10 +283,34 @@
             </div>
         </div>
     </div>
-
+    <!-- setting cookies-->
+    <!-- element_1 -->
+    <!-- Javascript -->
     <script>
+        var cookie = {};
+        document.cookie.split(';').forEach(function (el) {
+            var [k, v] = el.split('=');
+            cookie[k.trim()] = v;
+        });
+        console.log(cookie);
+        btnSetup();
+
+        function btnSetup() {
+            for (let i = 1; i < 6; i++) {
+                var elementName = 'element_' + i;
+                var btn = document.getElementById(elementName);
+                if (cookie[elementName] == 1) {
+                    btn.classList.add('active');
+                    showElement(i);
+                } else {
+                    btn.classList.remove('active');
+                    hiddenElement(i);
+                }
+            }
+        }
+
         function btnFunction(id) {
-            var btn = document.getElementById(id);
+            var btn = document.getElementById('element_' + id);
             var isActive = btn.classList.contains('active');
             if (isActive) {
                 btn.classList.remove('active');
@@ -290,34 +321,34 @@
             }
 
 
-            var btn1 = document.getElementById('first');
+            var btn1 = document.getElementById('element_1');
             var element1 = btn1.classList.contains('active');
             if (element1) {
                 element1 = 1;
             } else {
                 element1 = 0;
             }
-            var btn2 = document.getElementById('second');
+            var btn2 = document.getElementById('element_2');
             var element2 = btn2.classList.contains('active');
             if (element2) {
                 element2 = 1;
             } else {
                 element2 = 0;
             }
-            var btn3 = document.getElementById('third');
+            var btn3 = document.getElementById('element_3');
             var element3 = btn3.classList.contains('active');
             if (element3) {
                 element3 = 1;
             } else {
                 element3 = 0;
-            } btn4 = document.getElementById('fourth');
+            } btn4 = document.getElementById('element_4');
             var element4 = btn4.classList.contains('active');
             if (element4) {
                 element4 = 1;
             } else {
                 element4 = 0;
             }
-            var btn5 = document.getElementById('fifth');
+            var btn5 = document.getElementById('element_5');
             var element5 = btn5.classList.contains('active');
             if (element5) {
                 element5 = 1;

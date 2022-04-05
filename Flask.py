@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 import requests 
 import json
 import pandas as pd
@@ -30,7 +30,7 @@ def home():
 
 @app.route("/click", methods =['POST','GET'])  
 def home2():
-  
+  #ใช้อันนี้
   if request.method =='POST':
     dbtb = pd.read_csv('db.csv')
     user_ID = '2201'
@@ -47,7 +47,17 @@ def home2():
     dbtb = dbtb.append({'User_ID':user_ID,	'User_Sequence':user_sequence,	'Unique_ID':unique_ID,
     'Element_1':element_1,	'Element_2':element_2,	'Element_3':element_3,	'Element_4':element_4,'Element_5':element_5}, ignore_index=True)
     dbtb.to_csv('db.csv', index=False)
-    return render_template("nav-active.html")
+    
+    # Cookies
+    resp = make_response(render_template("nav-click.html"))
+    #Cookies testing 
+    resp.set_cookie('element_1', element_1)
+    resp.set_cookie('element_2', element_2)
+    resp.set_cookie('element_3', element_3)
+    resp.set_cookie('element_4', element_4)
+    resp.set_cookie('element_5', element_5)
+
+    return resp
 
   return render_template("nav-click.html")
 
